@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@deemlol/next-icons": "^0.1.9",
     "framer-motion": "^12.23.9",
     "gsap": "^3.13.0",
     "mongodb": "^6.18.0",
@@ -17,11 +18,13 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hot-toast": "^2.5.2",
+    "react-icons": "^5.5.0",
     "sonner": "^2.0.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "daisyui": "^5.0.47",
     "eslint": "^9",
     "eslint-config-next": "15.4.4",
     "tailwindcss": "^4"

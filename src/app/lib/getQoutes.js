@@ -1,7 +1,7 @@
 import React from "react";
 
 const getQoutes = async () => {
-  const res = await fetch("http://localhost:3000/api/qoutes", {
+  const res = await fetch("https://anonymisbah.vercel.app/api/qoutes", {
     cache: "no-store",
   });
   if (!res.ok) {

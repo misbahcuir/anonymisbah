@@ -69,8 +69,8 @@ const QuoteModal = ({ quoteId, isOpen, onClose, onSuccess }) => {
   if (!isOpen) return null;
 
   const modalContent = (
-    <dialog id={`edit-modal-${quoteId}`} className="modal modal-open">
-      <div className="modal-box">
+    <dialog id={`edit-modal-${quoteId}`} className="modal modal-open ">
+      <div className="modal-box bg-[#1a0c00]">
         <form method="dialog">
           <button
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -79,19 +79,22 @@ const QuoteModal = ({ quoteId, isOpen, onClose, onSuccess }) => {
             ✕
           </button>
         </form>
-        <div className="py-4 px-2">
+        <div className="py-4 px-2 bg-transparent">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-8">
               <span className="loading loading-ring loading-xl text-amber-600"></span>
             </div>
           ) : (
-            <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+            <form
+              className="flex flex-col gap-4 bg-transparent"
+              onSubmit={handleSubmit}
+            >
               <div>
                 <h6 className="text-amber-500 text-sm">Anonymous Text-</h6>
                 <textarea
                   name="question"
                   defaultValue={selectedquote?.question || ""}
-                  className="textarea textarea-bordered w-full h-36"
+                  className="textarea textarea-bordered w-full h-36  bg-transparent border border-amber-600"
                 ></textarea>
               </div>
               <div>
@@ -99,7 +102,7 @@ const QuoteModal = ({ quoteId, isOpen, onClose, onSuccess }) => {
                 <textarea
                   name="reply"
                   defaultValue={selectedquote?.reply || ""}
-                  className="textarea textarea-bordered w-full h-36"
+                  className="textarea textarea-bordered w-full h-36 bg-transparent border border-amber-600"
                 ></textarea>
               </div>
 
@@ -133,7 +136,7 @@ const QuoteModal = ({ quoteId, isOpen, onClose, onSuccess }) => {
               </div>
               <button
                 type="submit"
-                className="btn btn-soft btn-warning text-amber-700 hover:bg-amber-600 hover:text-white rounded-lg"
+                className="btn btn-soft btn-warning text-amber-700 hover:bg-amber-600 hover:text-white rounded-lg bg-transparent border border-amber-600"
               >
                 Submit
               </button>

@@ -29,7 +29,7 @@ export default function Home() {
     <main>
       <Hero></Hero>
       <div>
-        <h1 className="text-5xl md:text-6xl font-semibold text-center my-8">
+        <h1 className="text-5xl md:text-6xl font-semibold text-center my-8 text-white">
           Quotes and their Replies
         </h1>
         {isLoading ? (

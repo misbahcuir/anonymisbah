@@ -148,7 +148,7 @@ const Hero = () => {
         delay={150}
         animateBy="words"
         direction="top"
-        className="text-5xl md:text-6xl font-semibold text-center"
+        className="text-5xl md:text-6xl font-semibold text-center text-white"
       />
       <TextType
         text={

@@ -1,8 +1,14 @@
 "use client";
 import React from "react";
 import { Edit, Trash } from "@deemlol/next-icons";
+import deleteQuote from "../lib/deleteQuote";
+import toast from "react-hot-toast";
 
-const TableRow = ({ quote, onEditClick }) => {
+const TableRow = ({ quote, onEditClick, onDeleteSuccess, onDeleteClick }) => {
+  const handleDeleteClick = () => {
+    onDeleteClick(quote);
+  };
+
   return (
     <tr key={quote.id}>
       <td>
@@ -19,29 +25,37 @@ const TableRow = ({ quote, onEditClick }) => {
       <td>{quote.question}</td>
       <td>
         {quote.reply ? (
-          <div className="badge badge-soft badge-success">Replied </div>
+          <div className="badge badge-soft bg-green-950 border-green-950 badge-success">
+            Replied{" "}
+          </div>
         ) : (
-          <div className="badge badge-soft badge-error">Not Yet</div>
+          <div className="badge badge-soft badge-error bg-red-950 border-red-950">
+            Not Yet
+          </div>
         )}
       </td>
       <td>
         {quote.published ? (
-          <div className="badge badge-soft badge-success">Published </div>
+          <div className="badge badge-soft badge-success bg-green-950 border-green-950">
+            Published{" "}
+          </div>
         ) : (
-          <div className="badge badge-soft badge-error">Private</div>
+          <div className="badge badge-soft badge-error bg-red-950 border-red-950">
+            Private
+          </div>
         )}
       </td>
       <td className="text-center">
-        <ul className="menu menu-horizontal bg-base-200 rounded-box">
+        <ul className="menu menu-horizontal bg-transparent border border-amber-950 rounded-box">
           <li>
             <button onClick={() => onEditClick(quote._id)}>
               <Edit size={18} color="orange" />
             </button>
           </li>
           <li>
-            <a>
+            <button onClick={handleDeleteClick}>
               <Trash size={18} color="red" />
-            </a>
+            </button>
           </li>
         </ul>
       </td>

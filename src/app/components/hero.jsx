@@ -56,6 +56,8 @@ const Hero = () => {
     if (res.ok) {
       toast.success("Quote submitted successfully!");
       e.target.reset(); // Reset the form after successful submission
+    } else {
+      toast.error("Quote submission failed!");
     }
     // Optionally, clear the textarea or show a success message
   };

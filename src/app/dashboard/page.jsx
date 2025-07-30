@@ -4,6 +4,9 @@ import dynamic from "next/dynamic";
 import BlurText from "../../../ReactBits/BlurText/BlurText";
 import TableRow from "../components/tableRow";
 import getAllQuotesClient from "../lib/getAllQuotesClient";
+import DeleteConfirmModal from "../components/deleteConfirmModal";
+import deleteQuote from "../lib/deleteQuote";
+import toast from "react-hot-toast";
 
 // Dynamically import the modal to prevent SSR issues
 const QuoteModal = dynamic(() => import("../components/quoteModal"), {
@@ -21,6 +24,10 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [deleteModal, setDeleteModal] = useState({
+    isOpen: false,
+    quote: null,
+  });
 
   useEffect(() => {
     setMounted(true);
@@ -42,6 +49,31 @@ const Dashboard = () => {
   const handleModalSuccess = () => {
     // Refresh the quotes data after successful update
     getAllQuotesClient().then(setquotes).catch(console.error);
+  };
+
+  const handleDeleteSuccess = () => {
+    // Refresh the quotes data after successful deletion
+    getAllQuotesClient().then(setquotes).catch(console.error);
+  };
+
+  const handleDeleteClick = (quote) => {
+    setDeleteModal({ isOpen: true, quote });
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      await deleteQuote(deleteModal.quote._id);
+      toast.success("Quote deleted successfully!");
+      setDeleteModal({ isOpen: false, quote: null });
+      handleDeleteSuccess(); // Refresh the quotes list
+    } catch (error) {
+      toast.error("Failed to delete quote");
+      console.error("Delete error:", error);
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModal({ isOpen: false, quote: null });
   };
 
   // Don't render anything until mounted to prevent hydration issues
@@ -70,9 +102,9 @@ const Dashboard = () => {
             <span className="loading loading-spinner loading-lg"></span>
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+          <div className="overflow-x-auto rounded-box border border-amber-600 bg-transparent">
             <table className="table">
-              <thead>
+              <thead className="text-amber-600 font-semibold">
                 <tr>
                   <th>Time</th>
                   <th>quote</th>
@@ -87,6 +119,7 @@ const Dashboard = () => {
                     key={quote._id}
                     quote={quote}
                     onEditClick={handleEditClick}
+                    onDeleteClick={handleDeleteClick}
                   />
                 ))}
               </tbody>
@@ -101,6 +134,14 @@ const Dashboard = () => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onSuccess={handleModalSuccess}
+      />
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmModal
+        isOpen={deleteModal.isOpen}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        quoteText={deleteModal.quote?.question}
       />
     </div>
   );

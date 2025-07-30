@@ -1,9 +1,12 @@
-import React from "react";
-
-const getSingleQoutes = async (id) => {
-  const res = await fetch(`/api/qoutes/${id}`, {
+const getSinglequotes = async (id) => {
+  // Use relative URL for Next.js full-stack app
+  const res = await fetch(`/api/quotes/${id}`, {
     cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
+
   if (!res.ok) {
     throw new Error("Failed to fetch quote");
   }
@@ -11,4 +14,4 @@ const getSingleQoutes = async (id) => {
   return data;
 };
 
-export default getSingleQoutes;
+export default getSinglequotes;

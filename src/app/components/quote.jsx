@@ -1,6 +1,6 @@
 import React from "react";
 
-const Qoute = ({ q }) => {
+const Quote = ({ q }) => {
   const { question, reply } = q;
 
   return (
@@ -18,4 +18,4 @@ const Qoute = ({ q }) => {
   );
 };
 
-export default Qoute;
+export default Quote;

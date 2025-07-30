@@ -189,6 +189,36 @@ const Hero = () => {
           </button>
         </form>
       </motion.div>
+
+      {/* Scroll Down Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2, duration: 0.8 }}
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="text-amber-500"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 5v14M19 12l-7 7-7-7" />
+          </svg>
+        </motion.div>
+        <p className="text-amber-400 text-sm font-medium">
+          Scroll down to read the replies
+        </p>
+      </motion.div>
     </div>
   );
 };

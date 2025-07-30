@@ -46,20 +46,33 @@ const Hero = () => {
     const formData = new FormData(e.target);
     const question = formData.get("quote");
 
-    const res = await fetch("/api/quotes", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question }),
-    });
+    try {
+      const res = await fetch("/api/quotes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question }),
+      });
 
-    const data = await res.json();
-    if (res.ok) {
-      toast.success("Quote submitted successfully!");
-      e.target.reset(); // Reset the form after successful submission
-    } else {
+      const data = await res.json();
+      if (res.ok) {
+        toast.success("Quote submitted successfully!");
+
+        // Show email status if available
+        if (data.emailSent) {
+          toast.success("Email notification sent!");
+        } else if (data.emailError) {
+          console.warn("Email notification failed:", data.emailError);
+          // Don't show error toast to user since quote was saved successfully
+        }
+
+        e.target.reset(); // Reset the form after successful submission
+      } else {
+        toast.error("Quote submission failed!");
+      }
+    } catch (error) {
+      console.error("Error submitting quote:", error);
       toast.error("Quote submission failed!");
     }
-    // Optionally, clear the textarea or show a success message
   };
 
   return (

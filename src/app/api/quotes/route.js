@@ -47,8 +47,16 @@ export async function POST(request) {
     // Send email notification asynchronously (don't wait for it)
     const sendEmail = async () => {
       try {
+        // Check if RESEND_API_KEY is available
+        if (!process.env.RESEND_API_KEY) {
+          console.error("RESEND_API_KEY is not defined in environment variables");
+          return;
+        }
+
+        console.log("Attempting to send email for quote ID:", id);
         const resend = new Resend(process.env.RESEND_API_KEY);
-        await resend.emails.send({
+        
+        const emailResult = await resend.emails.send({
           from: "Anonymisbah <onboarding@resend.dev>",
           to: ["misbahlax3700@gmail.com"],
           subject: `New Anonymous Quote Received- ${id}`,
@@ -76,9 +84,15 @@ export async function POST(request) {
             </div>
           `,
         });
-        console.log("Email sent successfully for quote ID:", id);
+        
+        console.log("Email sent successfully for quote ID:", id, "Result:", emailResult);
       } catch (emailError) {
-        console.error("Email sending failed:", emailError);
+        console.error("Email sending failed for quote ID:", id, "Error:", emailError);
+        console.error("Error details:", {
+          message: emailError.message,
+          code: emailError.code,
+          statusCode: emailError.statusCode
+        });
         // Don't throw error - email failure shouldn't affect quote submission
       }
     };

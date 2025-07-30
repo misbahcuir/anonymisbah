@@ -11,7 +11,7 @@ export default async function Home() {
       <Hero></Hero>
       <div>
         <h1 className="text-5xl md:text-6xl font-semibold text-center my-8">
-          quotes and their Replies
+          Quotes and their Replies
         </h1>
         <div className="p-8 max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {quotes.map((quote) => (

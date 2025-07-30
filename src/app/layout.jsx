@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import Footer from "./components/footer";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -15,7 +16,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light">
       <body className={`${poppins.className}`}>
         <div className="min-h-screen w-full relative">
           {/* Crimson Depth */}
@@ -27,8 +28,7 @@ export default function RootLayout({ children }) {
             }}
           />
           <div className="relative z-10 ">
-            {" "}
-            <Toaster></Toaster> {children}
+            <Toaster></Toaster> {children} <Footer></Footer>
           </div>
         </div>
       </body>

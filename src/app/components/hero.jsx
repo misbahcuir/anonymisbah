@@ -16,7 +16,7 @@ import {
 } from "@deemlol/next-icons";
 
 // Floating Icons Component
-const FloatingIcon = ({ icon, delay, duration, x, y }) => (
+const FloatingIcon = ({ icon, delay, duration, x, y, left, top }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{
@@ -32,8 +32,8 @@ const FloatingIcon = ({ icon, delay, duration, x, y }) => (
     }}
     className="absolute text-amber-600 pointer-events-none"
     style={{
-      left: `${Math.random() * 80 + 10}%`,
-      top: `${Math.random() * 80 + 10}%`,
+      left: left,
+      top: top,
     }}
   >
     {icon}
@@ -68,59 +68,77 @@ const Hero = () => {
         delay={0}
         duration={4}
         x={10}
+        left="15%"
+        top="10%"
       />
       <FloatingIcon
         icon={<User size={68} color="#d97706" />}
         delay={0.5}
         duration={5}
         x={-15}
+        left="25%"
+        top="15%"
       />
       <FloatingIcon
         icon={<MessageSquare size={68} color="#d97706" />}
         delay={1}
         duration={4.5}
         x={20}
+        left="35%"
+        top="8%"
       />
       <FloatingIcon
         icon={<FileText size={68} color="#d97706" />}
         delay={1.5}
         duration={5.5}
         x={-10}
+        left="45%"
+        top="12%"
       />
       <FloatingIcon
         icon={<Lock size={68} color="#d97706" />}
         delay={2}
         duration={4}
         x={15}
+        left="55%"
+        top="18%"
       />
       <FloatingIcon
         icon={<MessageCircle size={68} color="#d97706" />}
         delay={2.5}
         duration={5}
         x={-20}
+        left="65%"
+        top="10%"
       />
       <FloatingIcon
         icon={<File size={68} color="#d97706" />}
         delay={3}
         duration={4.5}
         x={12}
+        left="75%"
+        top="15%"
       />
       <FloatingIcon
         icon={<Users size={68} color="#d97706" />}
         delay={3.5}
         duration={5.5}
         x={-18}
+        left="85%"
+        top="12%"
       />
 
       <BlurText
-        text={`Write a mystery quote for Misbah`}
+        text={`"Write a mystery quote for Misbah"`}
         delay={150}
         animateBy="words"
         direction="top"
         className="text-5xl md:text-6xl font-semibold text-center"
       />
       <TextType
-        text={"Your words, your thoughts, your quotes."}
+        text={
+          "Share your thoughts anonymously. Express yourself freely. Let your words inspire others. I'll reply to your quotes below with thoughtful responses."
+        }
         typingSpeed={75}
         pauseDuration={1500}
         showCursor={true}

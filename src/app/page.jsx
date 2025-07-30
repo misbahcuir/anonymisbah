@@ -1,18 +1,29 @@
+"use client";
+import { useEffect, useState } from "react";
 import Hero from "./components/hero";
 import Quote from "./components/quote";
-import getquotes from "./lib/getQuotes";
+import getquotesClient from "./lib/getQuotesClient";
 
-export default async function Home() {
-  let quotes = [];
-  let error = null;
+export default function Home() {
+  const [quotes, setQuotes] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  try {
-    quotes = await getquotes();
-    console.log(quotes);
-  } catch (err) {
-    console.error("Error fetching quotes:", err);
-    error = "Failed to load quotes";
-  }
+  useEffect(() => {
+    const fetchQuotes = async () => {
+      try {
+        const data = await getquotesClient();
+        setQuotes(data);
+      } catch (err) {
+        console.error("Error fetching quotes:", err);
+        setError("Failed to load quotes");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchQuotes();
+  }, []);
 
   return (
     <main>
@@ -21,10 +32,19 @@ export default async function Home() {
         <h1 className="text-5xl md:text-6xl font-semibold text-center my-8">
           Quotes and their Replies
         </h1>
-        {error ? (
+        {isLoading ? (
+          <div className="flex justify-center items-center h-32">
+            <span className="loading loading-spinner loading-lg"></span>
+          </div>
+        ) : error ? (
           <div className="text-center text-red-500 p-8">
             <p>{error}</p>
-            <p className="text-sm mt-2">Please try refreshing the page.</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="btn btn-primary mt-4"
+            >
+              Try Again
+            </button>
           </div>
         ) : quotes.length === 0 ? (
           <div className="text-center text-gray-500 p-8">

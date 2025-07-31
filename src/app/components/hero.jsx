@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import BlurText from "../../../ReactBits/BlurText/BlurText";
 import TextType from "../../../ReactBits/TextType/TextType";
@@ -41,8 +41,17 @@ const FloatingIcon = ({ icon, delay, duration, x, y, left, top }) => (
 );
 
 const Hero = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Prevent double submission
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+    toast.loading("Sending your quote...", { id: "quote-submission" });
+
     const formData = new FormData(e.target);
     const question = formData.get("quote");
 
@@ -55,23 +64,19 @@ const Hero = () => {
 
       const data = await res.json();
       if (res.ok) {
-        toast.success("Quote submitted successfully!");
-
-        // Show email status if available
-        if (data.emailSent) {
-          toast.success("Email notification sent!");
-        } else if (data.emailError) {
-          console.warn("Email notification failed:", data.emailError);
-          // Don't show error toast to user since quote was saved successfully
-        }
+        toast.success("Quote submitted successfully!", {
+          id: "quote-submission",
+        });
 
         e.target.reset(); // Reset the form after successful submission
       } else {
-        toast.error("Quote submission failed!");
+        toast.error("Quote submission failed!", { id: "quote-submission" });
       }
     } catch (error) {
       console.error("Error submitting quote:", error);
-      toast.error("Quote submission failed!");
+      toast.error("Quote submission failed!", { id: "quote-submission" });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -183,9 +188,21 @@ const Hero = () => {
           ></textarea>
           <button
             type="submit"
-            className="bg-amber-950 text-white px-6 py-3 rounded-lg shadow-md hover:bg-[#3c0a0a] transition-colors w-full  cursor-pointer"
+            disabled={isSubmitting}
+            className={`px-6 py-3 rounded-lg shadow-md transition-colors w-full cursor-pointer ${
+              isSubmitting
+                ? "bg-gray-600 text-gray-300 cursor-not-allowed"
+                : "bg-amber-950 text-white hover:bg-[#3c0a0a]"
+            }`}
           >
-            Send Quote{" "}
+            {isSubmitting ? (
+              <div className="flex items-center justify-center gap-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Sending...
+              </div>
+            ) : (
+              "Send Quote"
+            )}
           </button>
         </form>
       </motion.div>
